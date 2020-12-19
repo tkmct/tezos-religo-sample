@@ -1,0 +1,22 @@
+{
+  "contractName": "Migrations",
+  "abi": [],
+  "michelson": "[ { \"prim\": \"parameter\", \"args\": [ { \"prim\": \"int\" } ] },\n  { \"prim\": \"storage\",\n    \"args\":\n      [ { \"prim\": \"pair\",\n          \"args\":\n            [ { \"prim\": \"int\", \"annots\": [ \"%last_completed_migration\" ] },\n              { \"prim\": \"address\", \"annots\": [ \"%owner\" ] } ] } ] },\n  { \"prim\": \"code\",\n    \"args\":\n      [ [ { \"prim\": \"DUP\" }, { \"prim\": \"CDR\" }, { \"prim\": \"DUP\" },\n          { \"prim\": \"CDR\" }, { \"prim\": \"SENDER\" }, { \"prim\": \"COMPARE\" },\n          { \"prim\": \"NEQ\" },\n          { \"prim\": \"IF\",\n            \"args\":\n              [ [ { \"prim\": \"SWAP\" }, { \"prim\": \"DROP\" } ],\n                [ { \"prim\": \"CDR\" }, { \"prim\": \"SWAP\" }, { \"prim\": \"CAR\" },\n                  { \"prim\": \"PAIR\" } ] ] },\n          { \"prim\": \"NIL\", \"args\": [ { \"prim\": \"operation\" } ] },\n          { \"prim\": \"PAIR\" } ] ] } ]",
+  "source": "type migrations is record\n  owner : address;\n  last_completed_migration : int;\nend\n\nfunction main (const completed_migration: int ; var migrations : migrations) : (list(operation) * migrations) is\n  block {\n    if sender =/= migrations.owner\n    then\n      skip\n    else\n      migrations.last_completed_migration := completed_migration;\n  } with ((nil : list(operation)), migrations);\n",
+  "sourcePath": "/Users/tkmct/Playground/tez-example/contracts/Migrations.ligo",
+  "compiler": {
+    "name": "ligo",
+    "version": "next"
+  },
+  "networks": {
+    "NetXW8Mkz7iFLBF": {
+      "events": {},
+      "links": {},
+      "address": "KT1MHeUounMRHfEYdtYhsiNiLTe4WsMT19Fo",
+      "transactionHash": "oogQvw3fFnWxYSTh4hd5KsKEsxuue6xANhV7RhhikfaJ1nupp7Y"
+    }
+  },
+  "schemaVersion": "3.2.0-tezos.1",
+  "updatedAt": "2020-12-15T15:36:10.473Z",
+  "networkType": "tezos"
+}
